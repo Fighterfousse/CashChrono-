@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cash Chrono - Blood Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+            },
+            colors: {
+              blood: {
+                50: '#fff1f2',
+                100: '#ffe4e6',
+                200: '#fecdd3',
+                300: '#fda4af',
+                400: '#fb7185',
+                500: '#f43f5e',
+                600: '#e11d48',
+                700: '#be123c',
+                800: '#9f1239',
+                900: '#881337',
+                950: '#4c0519',
+              }
+            },
+            transitionTimingFunction: {
+              'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+              'out-circ': 'cubic-bezier(0.075, 0.82, 0.165, 1)',
+            },
+            animation: {
+              'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'shine': 'shine 2s linear infinite',
+              'reveal': 'reveal 1s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+              'scale-in': 'scaleIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+              'text-slide-up': 'textSlideUp 1s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+              'aurora': 'aurora 20s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-15px)' },
+              },
+              shine: {
+                '0%': { left: '-100%' },
+                '100%': { left: '100%' },
+              },
+              reveal: {
+                '0%': { opacity: '0', transform: 'translateY(30px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              scaleIn: {
+                '0%': { opacity: '0', transform: 'scale(0.95)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+              textSlideUp: {
+                '0%': { transform: 'translateY(100%)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              aurora: {
+                '0%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+                '100%': { backgroundPosition: '0% 50%' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Outfit', sans-serif;
+        overflow-x: hidden;
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+      
+      /* Smooth scrolling for the whole document */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Light Mode Default */
+      body {
+        background-color: #f8fafc;
+        color: #1e293b;
+      }
+
+      /* Dark Mode Override */
+      .dark body {
+        background-color: #050505;
+        color: #fff;
+      }
+      
+      /* Refined Grid Background */
+      .grid-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -2;
+        background-size: 60px 60px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
+      }
+
+      .dark .grid-bg {
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      }
+
+      /* Yavar-style Aurora Glow */
+      .ambient-glow {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.6;
+        background: 
+          radial-gradient(circle at 15% 50%, rgba(225, 29, 72, 0.15), transparent 25%), 
+          radial-gradient(circle at 85% 30%, rgba(190, 18, 60, 0.15), transparent 25%);
+        filter: blur(60px);
+        transition: opacity 1s ease;
+      }
+      
+      .dark .ambient-glow {
+        opacity: 0.8;
+        background: 
+          radial-gradient(circle at 15% 50%, rgba(220, 38, 38, 0.2), transparent 40%), 
+          radial-gradient(circle at 85% 30%, rgba(136, 19, 55, 0.2), transparent 40%);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.3);
+        border-radius: 20px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(244, 63, 94, 0.6);
+      }
+
+      /* Advanced Glassmorphism */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+      }
+      
+      .dark .glass-panel {
+        background: rgba(10, 10, 10, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      }
+      
+      .glass-card {
+         background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(248, 250, 252, 0.8) 100%);
+         border: 1px solid rgba(255, 255, 255, 0.6);
+         backdrop-filter: blur(10px);
+      }
+      
+      .dark .glass-card {
+         background: linear-gradient(180deg, rgba(25, 25, 25, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
+         border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Scroll Reveal Classes */
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      
+      .reveal-visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      /* Text Animation Utility */
+      .clip-text-image {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0",
+    "recharts": "https://aistudiocdn.com/recharts@^2.12.2",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body class="antialiased selection:bg-rose-500/30 selection:text-rose-200">
+    <div class="grid-bg"></div>
+    <div class="ambient-glow"></div>
+    <div id="root" class="relative z-10"></div>
+  </body>
+</html>
